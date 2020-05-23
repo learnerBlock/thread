@@ -1,1 +1,25 @@
+Thread类的interrupt() , isInterrupted(),interrupted()区别：
+ 
+下列三种情形
+/**
+ 1 调用wait(),sleep(),join()这些函数或他们的重载函数导致线程阻塞，调用interrupt会抛出中断异常InterruptedException，同时会清除线程的中断状态为默认状态，
+ 即 中断状态为false;
+ 2如果线程阻塞在 java.nio.channels.InterruptibleChannel InterruptibleChannel的io操作上，调用interrupt函数会关闭Channel，抛出channel关闭异常
+ java.nio.channels.ClosedByInterruptException，同时会记录下线程中断状态 为true;
+ 3 如果线程阻塞在java.nio.channels.Selector操作上，selection operation轮询操作将会立即返回，返回值可能非零（和调用java.nio.channels.Selector#wakeup wakeup一样）
+ 同时线程中断状态会被记录为true。
+*/
+interrupt()函数除了上面3中情况外，调用都会记录下中断状态。如果中断一个还没有激活的线程，不会产生任何影响。
 
+  
+  isInterrupted函数获取线程中断状态，并且不会改变中断状态。
+  interrupted函数获取线程中断状态。同时会清除中断状态。
+  这2个函数底层调用相同的方法，参数不同而已。
+
+   public boolean isInterrupted() {
+        return isInterrupted(false);
+    }
+    
+    public static boolean interrupted() {
+        return currentThread().isInterrupted(true);
+    }
