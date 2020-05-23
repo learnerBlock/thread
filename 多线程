@@ -12,14 +12,14 @@ Thread类的interrupt() , isInterrupted(),interrupted()区别：
 interrupt()函数除了上面3中情况外，调用都会记录下中断状态。如果中断一个还没有激活的线程，不会产生任何影响。
 
   
-  isInterrupted函数获取线程中断状态，并且不会改变中断状态。
-  interrupted函数获取线程中断状态。同时会清除中断状态。
-  这2个函数底层调用相同的方法，参数不同而已。
+isInterrupted函数获取线程中断状态，并且不会改变中断状态。
+interrupted函数获取线程中断状态。同时会清除中断状态。
+这2个函数底层调用相同的方法，参数不同而已。
 
-   public boolean isInterrupted() {
-        return isInterrupted(false);
-    }
-    
-    public static boolean interrupted() {
-        return currentThread().isInterrupted(true);
-    }
+public boolean isInterrupted() {
+   return isInterrupted(false);
+}
+
+public static boolean interrupted() {
+   return currentThread().isInterrupted(true);
+}
